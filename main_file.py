@@ -16,6 +16,15 @@ if "messages" not in st.session_state:
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
+        
+        
+col1,col2=st.columns(2,vertical_alignment='top')
+
+first=col1.button("Local_Agent",use_container_width=True)
+
+with first:
+    
+        
 
 user_input = st.chat_input("Enter your task (e.g. open dhurander trailer on youtube)")
 
@@ -43,12 +52,12 @@ if user_input:
                 status = result.get("status", [])
 
                 response_text = f"""
-**🧠 Intent Detected**
-- **Action:** `{action}`
-- **Query:** `{query}`
+                    **🧠 Intent Detected**
+                    - **Action:** `{action}`
+                    - **Query:** `{query}`
 
-**⚙️ Execution Status**
-"""
+                    **⚙️ Execution Status**
+                """
                 for s in status:
                     response_text += f"- ✅ {s}\n"
 

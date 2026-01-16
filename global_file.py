@@ -1,4 +1,3 @@
-import os
 import subprocess
 from typing import TypedDict, List
 from langgraph.graph import END,StateGraph
@@ -79,11 +78,11 @@ def execute_steps(state: WorkflowState):
         state["status"].append(response.content)
 
     elif state["action"] == "unknown":
-        state["status"].append(
-            "I didn’t understand. You can chat or give a command."
-        )
+        state["status"].append("I didn’t understand. You can chat or give a command.")
             
     return state
+
+
 
 graph = StateGraph(WorkflowState)
 
@@ -96,5 +95,5 @@ graph.add_edge("parse_intent", "validate")
 graph.add_edge("validate", "execute")
 graph.add_edge("execute",END)
 
-app = graph.compile()
+global_flow = graph.compile()
 
