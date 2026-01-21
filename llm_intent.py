@@ -21,7 +21,6 @@ Use it to resolve references like:
 - same thing
 
 Allowed actions:
-- open_whatapp
 - open_chrome
 - open_youtube
 - chat

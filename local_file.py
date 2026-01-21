@@ -17,6 +17,12 @@ def openfile(path:str):
 def openvs(path:str):
     subprocess.Popen([PATHS["vscode"],path])
     
+def open_whatsapp_chat():
+    subprocess.Popen(
+        'explorer.exe shell:AppsFolder\\5319275A.WhatsAppDesktop_cv1g1gvanyjgm!App',
+        shell=True
+    )    
+    
 class LocalWorkFlow(TypedDict):
     user_input:str
     action:str
@@ -26,10 +32,10 @@ class LocalWorkFlow(TypedDict):
     
     
 def parse_intent(state:LocalWorkFlow):
-    chain=llm | local_prompt
+    chain=local_prompt | llm
     response=chain.invoke({"user_input":state['user_input'],"history":state.get("history",[])})
     
-    parse=json.load(response.content)
+    parse=json.loads(response.content)
     state["action"]=parse["action"]
     state["path"]=parse["path"]
     
@@ -40,6 +46,7 @@ def validate(state:LocalWorkFlow):
         "open_folder",
         "open_file",
         "open_vscode",
+        "open_whatapp",
         "unknown"
     }
     
@@ -52,21 +59,25 @@ def validate(state:LocalWorkFlow):
 def execute(state:LocalWorkFlow):
     state["status"]=[]
     
-    if state["status"] =="open_folder":
+    if state["action"] =="open_folder":
         openfoler(state["path"])
         state["status"].append(f"Open Folder name: {state["path"]}")
         
         
-    elif state["status"] =="open_file":
+    elif state["action"] =="open_file":
         openfoler(state["path"])
         state["status"].append(f"Open File name: {state["path"]}")
         
         
-    elif state["status"] =="vscode":
+    elif state["action"] =="vscode":
         openfoler(state["path"])
         state["status"].append(f"Open in Vscode: {state["path"]}")
         
-    elif state["status"]=="unknown":
+    elif state["action"]=="open_whatapp":
+        open_whatsapp_chat()
+        state["status"].append("Whatapp is open")    
+        
+    elif state["action"]=="unknown":
         state["status"].append(f"Cannot not understand this command.")       
         
         

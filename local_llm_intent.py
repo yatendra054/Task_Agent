@@ -22,41 +22,43 @@ Your job is to extract:
 - absolute Windows path
 
 Allowed actions:
-- open_folder       
+- open_folder     
 - open_file        
-- open_vscode    
+- open_vscode
+- open_whatapp   
 - unknown
 
 Rules:
-1. If user says "open", "show", "go to" → open_folder
+1. If user says "open floder", "show floder", "go to floder" → open_folder
 2. If user mentions a file name (pdf, txt, docx, etc.) → open_file
 3. If user mentions VS Code, code editor → open_vscode
-4. If path is NOT inside D:\\ → action = unknown
-5. Always resolve FULL ABSOLUTE PATH
-6. NEVER guess paths outside D:\\
+4. If user says "open whatapp" , "start whatapp" -> open_whatapp
+5. If path is NOT inside D:\\ → action = unknown
+6. Always resolve FULL ABSOLUTE PATH
+7. NEVER guess paths outside D:\\
 
 Examples:
 
-User: Open Downloads in D drive  
+User: Open Downloads folder inside open file_name 
 Output:
-{
+{{
   "action": "open_folder",
-  "path": "D:\\Downloads"
-}
+  "path": "D:\\Downloads\\file_name"
+}}
 
 User: Open yatendra_resume.pdf from Downloads  
 Output:
-{
+{{
   "action": "open_file",
   "path": "D:\\Downloads\\yatendra_resume.pdf"
-}
+}}
 
 User: Open Django Start project in VS Code  
 Output:
-{
+{{
   "action": "open_vscode",
   "path": "D:\\Django\\Start"
-}
+}}
 
 Output ONLY valid JSON.
 """),

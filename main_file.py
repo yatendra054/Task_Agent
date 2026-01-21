@@ -1,5 +1,6 @@
 import streamlit as st
-from project import app  
+from router import router_agent
+
 st.set_page_config(
     page_title="AI Task Agent",
     page_icon="🤖",
@@ -11,6 +12,9 @@ st.caption("Control apps using natural language")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
+    
+if "agent" not in st.session_state:
+    st.session_state.agent = 'chrome'
 
 
 for msg in st.session_state.messages:
@@ -18,11 +22,16 @@ for msg in st.session_state.messages:
         st.markdown(msg["content"])
         
         
-col1,col2=st.columns(2,vertical_alignment='top')
+col1,col2=st.columns(2)
 
-first=col1.button("Local_Agent",use_container_width=True)
 
-with first:
+with col1:
+    if st.button("Local Agent",use_container_width=True):
+        st.session_state.agent="local"
+    
+with col2:
+    if st.button("Chrome Agent",use_container_width=True):
+        st.session_state.agent="chrome"   
     
         
 
@@ -45,7 +54,7 @@ if user_input:
     with st.chat_message("assistant"):
         with st.spinner("🤔 Agent is thinking..."):
             try:
-                result = app.invoke({"user_input": user_input,"history":st.session_state.messages})
+                result = router_agent(st.session_state.agent,{"user_input": user_input,"history":st.session_state.messages})
 
                 action = result.get("action", "unknown")
                 query = result.get("query", "")

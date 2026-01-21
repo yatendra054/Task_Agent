@@ -47,7 +47,6 @@ def parse_intent(state: WorkflowState):
 
 def validate_steps(state: WorkflowState):
     allowed = {
-        "open_whatapp",
         "open_chrome",
         "open_youtube",
         "chat",
@@ -68,10 +67,6 @@ def execute_steps(state: WorkflowState):
     elif state["action"] == "open_chrome":
         open_chorme(state["query"])
         state["status"].append(f"Chrome opened with search result: {state['query']}")   
-    
-    elif state["action"]=="open_whatapp":
-        open_whatsapp_chat()
-        state["status"].append("Whatapp is open")
         
     elif state["action"] == "chat":
         response = llm.invoke(state["query"])
