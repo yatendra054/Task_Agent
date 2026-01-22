@@ -11,7 +11,7 @@ Built with **Streamlit**, **LangGraph**, **LangChain**, and **Groq LLM API**.
 - Open folders from **any drive** (C, D, F, etc.)
 - Open files (PDF, TXT, DOCX, images, etc.)
 - Open projects/folders directly in **VS Code**
-- Open **WhatsApp Desktop**
+- Open **WhatsApp, X and Linkdein Desktop**
 - Supports **hierarchical folder navigation** (step-by-step order)
 
 ### Chrome Agent
